@@ -1,0 +1,207 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ISI_PriceStatApp.ViewModels"
+        xmlns:defaults="using:ISI_PriceStatApp.Defaults"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="900"
+        x:Class="ISI_PriceStatApp.Views.AppWindow"
+        xmlns:lcp="using:LiveChartsCore.SkiaSharpView"
+        xmlns:converters="using:ISI_PriceStatApp.Converters"
+        xmlns:colorpicker="clr-namespace:AvaloniaColorPicker;assembly=AvaloniaColorPicker"
+        xmlns:lc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+        xmlns:i="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
+        xmlns:views="using:ISI_PriceStatApp.Views"
+        Icon="/Assets/app-logo.ico"
+        Title="ISI-PriceStatApp"
+        Width="1200"
+        MinWidth="600"
+        Height="600"
+        MinHeight="300"
+        WindowStartupLocation="CenterScreen"
+        
+        TransparencyLevelHint="None"
+        TransparencyBackgroundFallback="Transparent"
+        ExtendClientAreaToDecorationsHint="True">
+    
+    <Design.DataContext>
+        <vm:AppWindowViewModel/>
+    </Design.DataContext>
+    
+    <Grid RowDefinitions="30,*">
+        
+        <!-- title bar : row0 -->
+        <DockPanel Margin="10 10 0 0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Image Source="../Assets/app-logo.ico"/>
+            <TextBlock Margin="5 0 0 0" Text="ISI-PriceStatApp" VerticalAlignment="Center"/>
+            
+            <DockPanel Margin="10 0 0 0" IsVisible="False" VerticalAlignment="Center">
+                <i:PackIcon Foreground="Red" Kind="Wifi"/>
+                <TextBlock Margin="5 0 0 0" Text="Network so slow" Foreground="Red"/>
+            </DockPanel>
+            
+            <DockPanel Name="ConnectionLostPanel" Margin="10 0 0 0" IsVisible="False" VerticalAlignment="Center">
+                <i:PackIcon Foreground="Red" Kind="Connection"/>
+                <TextBlock Margin="5 0 0 0" Text="Connection lost" Foreground="Red"/>
+            </DockPanel>
+        </DockPanel>
+        
+        <!-- content -->
+        <Grid Grid.Row="1" ColumnDefinitions="400,5,7*">
+            
+            <!-- all visibility switches for crypto/pc-parts -->
+            <Grid Grid.Column="0" RowDefinitions="50,*,*" DataContext="{Binding AppModel^}">
+                
+                <!-- settings -->
+                <DockPanel Margin="10" Grid.Row="0">
+					<Menu>
+						<MenuItem Header="Export">
+							<MenuItem Command="{Binding ExportCryptoCoinsCommand}" Header="Crypto coins"/>
+							<MenuItem Command="{Binding ExportComputerPartsCommand}" Header="Computer parts"/>
+						</MenuItem>
+						<MenuItem Header="Import">
+							<MenuItem Command="{Binding ImportCryptoCoinsCommand}" Header="Crypto coins"/>
+							<MenuItem Command="{Binding ImportComputerPartsCommand}" Header="Computer parts"/>
+						</MenuItem>
+					</Menu>
+                </DockPanel>
+                
+                <!-- crypto -->
+                <DataGrid Grid.Row="1" 
+                          Items="{Binding CryptoCoinsVisuals, Mode=TwoWay}"
+                          AutoGenerateColumns="False"
+                          CanUserReorderColumns="True"
+                          CanUserSortColumns="True">
+                    <DataGrid.Columns>
+                        
+                        <!-- visibility checkbox-column -->
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.Header>
+                                <i:PackIcon Kind="Visibility" VerticalAlignment="Center"/>
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                    <CheckBox IsThreeState="False" HorizontalAlignment="Center"
+                                              IsChecked="{Binding IsVisible, Mode=TwoWay}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        
+                        <!-- pc-part name column -->
+                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                        <DataGridTextColumn IsReadOnly="True" Header="Which coin" Binding="{Binding Name}"/>
+                        
+                        <!-- color-picker column -->
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.Header>
+                                <i:PackIcon Kind="Color"/>
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                        <colorpicker:ColorButton Color="{Binding Color, 
+                                            Converter={x:Static converters:ColorConverters.LiveChartsColorColorPickerConverter},
+                                            Mode=TwoWay}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        
+                        <!-- series line smoothness column -->
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.Header>
+                                <i:PackIcon Kind="ChartLineVariant"/>
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                    <Slider Maximum="100" Minimum="0" 
+                                            Value="{Binding LineSmoothness, 
+                                                Converter={x:Static converters:SliderValueConverters.ChartSmoothnessConverter},
+                                                Mode=TwoWay}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                
+                <!-- pc-parts -->
+                <DataGrid Grid.Row="2" 
+                          Items="{Binding ComputerPartsVisuals, Mode=TwoWay}"
+                          AutoGenerateColumns="False"
+                          CanUserReorderColumns="True"
+                          CanUserResizeColumns="True">
+                    <DataGrid.Columns>
+                        
+                        <!-- visibility checkbox-column -->
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.Header>
+                                <Grid>
+                                    <i:PackIcon Grid.Column="0" Kind="Visibility" VerticalAlignment="Center"/>
+                                </Grid>
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                    <CheckBox IsThreeState="False" HorizontalAlignment="Center"
+                                              IsChecked="{Binding IsVisible, Mode=TwoWay}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        
+                        <!-- pc-part name column -->
+                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                        <DataGridTextColumn IsReadOnly="True" Header="Which part" Binding="{Binding Name}"/>
+                        
+                        <!-- color-picker column -->
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.Header>
+                                <i:PackIcon Kind="Color"/>
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                        <colorpicker:ColorButton Color="{Binding Color, 
+                                            Converter={x:Static converters:ColorConverters.LiveChartsColorColorPickerConverter},
+                                            Mode=TwoWay}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        
+                        <!-- series line smoothness column -->
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.Header>
+                                <i:PackIcon Kind="ChartLineVariant"/>
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                    <Slider Maximum="100" Minimum="0" 
+                                            Value="{Binding LineSmoothness, 
+                                                Converter={x:Static converters:SliderValueConverters.ChartSmoothnessConverter},
+                                                Mode=TwoWay}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+            
+            <GridSplitter Grid.Column="1" Background="#696969"/>
+        
+            <!-- live chart -->
+            <Grid Grid.Column="2">
+                <lc:CartesianChart LegendPosition="Hidden" ZoomMode="X" XAxes="{Binding XAxesCustom}" 
+                                   Series="{Binding Series}" TooltipPosition="Hidden"/>
+            </Grid>
+        </Grid>
+        
+        <views:LoadingView Grid.Row="1" IsVisible="{Binding IsContentLoading, Mode=OneWay}"
+                           IsEnabled="{Binding IsContentLoading, Mode=OneWay}"/>
+    </Grid>
+</Window>
+

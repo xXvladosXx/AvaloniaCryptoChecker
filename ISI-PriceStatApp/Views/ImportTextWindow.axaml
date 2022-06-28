@@ -1,0 +1,39 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ISI_PriceStatApp.Views.ImportTextWindow"
+		xmlns:vm="using:ISI_PriceStatApp.ViewModels"
+        Title="ImportTextWindow"
+		WindowStartupLocation="CenterOwner"
+		Width="800"
+		Height="600"
+		
+		ExtendClientAreaToDecorationsHint="True">
+
+	<Design.DataContext>
+		<vm:ExportedTextViewModel/>
+	</Design.DataContext>
+
+	<Grid RowDefinitions="30,*,30">
+		<TextBox Grid.Row="1" IsReadOnly="False"
+				 TextWrapping="Wrap"
+				 Text="{Binding Text, Mode=TwoWay}"/>
+
+		<DockPanel Grid.Row="2" HorizontalAlignment="Right">
+			<Button Command="{Binding ImportCommand}">
+				<DockPanel>
+					<TextBlock Text="Import!"/>
+				</DockPanel>
+			</Button>
+
+			<Button Command="{Binding ReadFromFileCommand}">
+				<DockPanel>
+					<TextBlock Text="Read from file..."/>
+				</DockPanel>
+			</Button>
+		</DockPanel>
+	</Grid>
+	
+</Window>

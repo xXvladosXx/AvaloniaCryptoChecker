@@ -1,0 +1,14 @@
+C:\Users\flexxxer\RiderProjects\ISI-PriceStatApp\Domain\bin\Release\Domain.deps.json
+C:\Users\flexxxer\RiderProjects\ISI-PriceStatApp\Domain\bin\Release\Domain.dll
+C:\Users\flexxxer\RiderProjects\ISI-PriceStatApp\Domain\bin\Release\Domain.pdb
+C:\Users\flexxxer\RiderProjects\ISI-PriceStatApp\Domain\obj\Release\Domain.csproj.AssemblyReference.cache
+C:\Users\flexxxer\RiderProjects\ISI-PriceStatApp\Domain\obj\Release\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\flexxxer\RiderProjects\ISI-PriceStatApp\Domain\obj\Release\Domain.AssemblyInfoInputs.cache
+C:\Users\flexxxer\RiderProjects\ISI-PriceStatApp\Domain\obj\Release\Domain.AssemblyInfo.cs
+C:\Users\flexxxer\RiderProjects\ISI-PriceStatApp\Domain\obj\Release\Domain.csproj.CoreCompileInputs.cache
+C:\Users\flexxxer\RiderProjects\ISI-PriceStatApp\Domain\obj\Release\Domain.dll
+C:\Users\flexxxer\RiderProjects\ISI-PriceStatApp\Domain\obj\Release\Domain.pdb
+C:\Users\flexxxer\RiderProjects\ISI-PriceStatApp\Domain\bin\Release\Domain.runtimeconfig.json
+C:\Users\flexxxer\RiderProjects\ISI-PriceStatApp\Domain\bin\Release\ref\Domain.dll
+C:\Users\flexxxer\RiderProjects\ISI-PriceStatApp\Domain\obj\Release\ref\Domain.dll
+C:\Users\flexxxer\RiderProjects\ISI-PriceStatApp\Domain\obj\Release\Domain.genruntimeconfig.cache

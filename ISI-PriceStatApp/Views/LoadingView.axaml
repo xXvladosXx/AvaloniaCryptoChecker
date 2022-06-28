@@ -1,0 +1,36 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:ISI_PriceStatApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ISI_PriceStatApp.Views.LoadingView"
+             Background="Transparent">
+    
+    <Design.DataContext>
+        <vm:LoadingViewModel/>
+    </Design.DataContext>
+    
+    <Grid IsEnabled="{Binding $parent.IsVisible}">
+        
+        <Rectangle Fill="Black" Stroke="Black" Opacity="0.9"/>
+        
+        <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*" Background="Transparent"
+              IsEnabled="{Binding $parent.IsEnabled}">
+            
+            <TextBlock Grid.Row="0" Grid.Column="1" 
+                       HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+                       Text="Wait for second..." FontSize="20"/>
+        
+            <StackPanel Grid.Row="1" Grid.Column="1" 
+                        HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                        IsEnabled="{Binding $parent.IsEnabled}">
+                <ProgressBar IsIndeterminate="True" />
+            </StackPanel>
+            
+        </Grid>
+    </Grid>
+    
+    
+    
+</UserControl>

@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6</TargetFramework>
+        <Nullable>enable</Nullable>
+        <LangVersion>preview</LangVersion>
+        
+        <RootNamespace>ISI_PriceStatApp</RootNamespace>
+
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        
+        <ApplicationIcon>Assets/app-logo.ico</ApplicationIcon>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <Folder Include="Commands" />
+        <Folder Include="Models\" />
+        <AvaloniaResource Include="Assets\**" />
+        <None Remove=".gitignore" />
+        <Watch Include="**\*.xaml" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Aura.UI" Version="0.1.5-dev-04" />
+        <PackageReference Include="Avalonia" Version="0.10.11" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.11" />
+        
+        <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.11" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.11" />
+        <PackageReference Include="AvaloniaColorPicker" Version="1.1.0" />
+        <PackageReference Include="Live.Avalonia" Version="1.3.1" />
+        <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-beta.90" />
+        <PackageReference Include="MaterialDesign.Avalonia.PackIcon" Version="1.23.0" />
+        <PackageReference Include="MessageBox.Avalonia" Version="1.7.1" />
+        <PackageReference Include="Nancy" Version="2.0.0" />
+        <PackageReference Include="ReactiveUI.Fody" Version="17.1.17" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+</Project>
